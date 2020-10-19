@@ -4,12 +4,12 @@ import { ChatResponse, Exception } from './response'
 export default class SessionRepository extends Request {
 
   /**
-   * get history chat
-   * Params :
-   * @number limit ? default: 0
-   * @void callback
-   *  -- @ChatResponse data
-   * Return @void
+   * @description get history chat
+   * @param {number} limit [default: 0] optional
+   * @param {void} callback void
+   *  @param {ChatResponse} callback.data ChatResponse
+   * @returns {void} void
+   * @public
    */
   public getHistory(limit: number = 0, callback: (data: ChatResponse) => void) {
     const url = `/chat/history${limit > 0 ? `/${limit}` : ``}`
@@ -23,12 +23,12 @@ export default class SessionRepository extends Request {
   }
 
   /**
-   * get chat
-   * Params :
-   * @string id
-   * @void callback
-   *  -- @ChatResponse data
-   * Return @void
+   * @description get chat
+   * @param {string} id string
+   * @param {void} callback void
+   *  @param {ChatResponse} callback.data ChatResponse
+   * @returns {void}
+   * @public
    */
   public getChat(id: string, callback: (data: ChatResponse) => void) {
     const url = `/chat/get/${id}`
@@ -42,12 +42,12 @@ export default class SessionRepository extends Request {
   }
 
   /**
-   * read all chat
-   * Params :
-   * @Array of @number chat_ids
-   * @void callback
-   *  -- @ChatResponse data
-   * Return @void
+   * @description read all chat
+   * @param {Array<number>} chat_ids array of number
+   * @param {void} callback void
+   *  @param {ChatResponse} callback.data ChatResponse
+   * @return {void}
+   * @public
    */
   public readAll(chat_ids: Array<number>, callback: (data: ChatResponse) => void) {
     const url = `/chat/readall`
@@ -61,12 +61,12 @@ export default class SessionRepository extends Request {
   }
 
   /**
-   * read chat
-   * Params :
-   * @number chat_id
-   * @void callback
-   *  -- @ChatResponse data
-   * Return @void
+   * @description read chat
+   * @param {number} chat_id number
+   * @param {void} callback void
+   *  @param {ChatResponse} callback.data ChatResponse
+   * @return {void}
+   * @public
    */
   public read(chat_id: number, callback: (data: ChatResponse) => void) {
     const url = `/chat/read`
@@ -80,12 +80,12 @@ export default class SessionRepository extends Request {
   }
 
   /**
-   * received chat
-   * Params :
-   * @number chat_id
-   * @void callback
-   *  -- @ChatResponse data
-   * Return @void
+   * @description received chat
+   * @param {number} chat_id number
+   * @param {void} callback void
+   *  @param {ChatResponse} callback.data ChatResponse
+   * @return {void}
+   * @public
    */
   public received(chat_id: number, callback: (data: ChatResponse) => void) {
     const url = `/chat/received`
@@ -99,13 +99,13 @@ export default class SessionRepository extends Request {
   }
 
   /**
-   * get last chat with
-   * Params :
-   * @string target
-   * @number limit ? default : 0
-   * @void callback
-   *  -- @ChatResponse data
-   * Return @void
+   * @description get last chat with
+   * @param {string} target string
+   * @param {number} limit [default : 0] number
+   * @param {void} callback void
+   *  @param {ChatResponse} callback.data ChatResponse
+   * @return {void}
+   * @public
    */
   public getLastWith(target: string, limit: number = 0, callback: (data: ChatResponse) => void) {
     const url = `/chat/with/${target}/last${limit > 0 ? `/${limit}` : ``}`
@@ -119,15 +119,15 @@ export default class SessionRepository extends Request {
   }
 
   /**
-   * get between chat with
-   * Params :
-   * @string target
-   * @object between
-   *  -- @string start
-   *  -- @string end
-   * @void callback
-   *  -- @ChatResponse data
-   * Return @void
+   * @description get between chat with
+   * @param {string} target string
+   * @param {object} between object
+   *  @param {string} between.start string
+   *  @param {string} between.end string
+   * @param {void} callback void
+   *  @param {ChatResponse} callback.data ChatResponse
+   * @return {void}
+   * @public
    */
   public getBetweenWith(target: string, between: any, callback: (data: ChatResponse) => void) {
     const url = `/chat/with/${target}/between/${between.start}-${between.end}`
@@ -141,12 +141,12 @@ export default class SessionRepository extends Request {
   }
 
   /**
-   * get delay chat with
-   * Params :
-   * @string target
-   * @void callback
-   *  -- @ChatResponse data
-   * Return @void
+   * @description get delay chat with
+   * @param {string} target string
+   * @param {void} callback void
+   *  @param {ChatResponse} callback.data ChatResponse
+   * @return {void}
+   * @public
    */
   public getDelayWith(target: string, callback: (data: ChatResponse) => void) {
     const url = `/chat/with/${target}/delay`
@@ -160,12 +160,12 @@ export default class SessionRepository extends Request {
   }
 
   /**
-   * get unread chat with
-   * Params :
-   * @string target
-   * @void callback
-   *  -- @ChatResponse data
-   * Return @void
+   * @description get unread chat with
+   * @param {string} target string
+   * @param {void} callback void
+   *  @param {ChatResponse} callback.data ChatResponse
+   * @return {void}
+   * @public
    */
   public getUnreadWith(target: string, callback: (data: ChatResponse) => void) {
     const url = `/chat/with/${target}/unread`
@@ -179,12 +179,12 @@ export default class SessionRepository extends Request {
   }
 
   /**
-   * get read all chat with
-   * Params :
-   * @string target
-   * @void callback
-   *  -- @ChatResponse data
-   * Return @void
+   * @description get read all chat with
+   * @param {string} target string
+   * @param {void} callback void
+   *  @param {ChatResponse} callback.data ChatResponse
+   * @return {void}
+   * @public
    */
   public getReadAllWith(target: string, callback: (data: ChatResponse) => void) {
     const url = `/chat/with/${target}/readall`
@@ -198,15 +198,15 @@ export default class SessionRepository extends Request {
   }
 
   /**
-   * send chat
-   * Params :
-   * @object chat
-   *  -- @string to
-   *  -- @string text
-   *  -- @number send_at
-   * @void callback
-   *  -- @ChatResponse data
-   * Return @void
+   * @description send chat
+   * @param {object} chat object
+   *  @param {string} chat.to string
+   *  @param {string} chat.text string
+   *  @param {number} chat.send_at number
+   * @param {void} callback void
+   *  @param {ChatResponse} callback.data ChatResponse
+   * @return {void}
+   * @public
    */
   public send(chat: {}, callback: (data: ChatResponse) => void) {
     const url = `/chat/send`

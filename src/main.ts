@@ -50,4 +50,4 @@ app.get('/', function (req, res) {
 /**
 * Register socket
 */
-http.listen(port, () => logger.info(`Connection Established. Version ${process.env.npm_package_version}`));
+http.listen(port, () => logger.info(`Connection Established on port: ${port}. Version ${process.env.npm_package_version}`));

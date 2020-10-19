@@ -1,11 +1,5 @@
-import BaseEventHandler from '../../parents/BaseEventHandler'
+import BaseHandler from '../Handler'
 
-export default class ChatReceiver {
-
-  protected parent: BaseEventHandler
-
-  constructor(parent: BaseEventHandler) {
-    this.parent = parent
-  }
+export default class ChatReceiver extends BaseHandler {
 
 }

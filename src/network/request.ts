@@ -57,8 +57,6 @@ export default class Request {
         } else {
           logger.warn(`POST: ${url} error with error ${error.error.toJSON()}`)
         }
-
-        Promise.reject(error.error)
       })
   }
 
@@ -76,8 +74,6 @@ export default class Request {
         } else {
           logger.warn(`POST: ${url} error with error ${error.error.toJSON()}`)
         }
-
-        Promise.reject(error.error)
       })
   }
 }

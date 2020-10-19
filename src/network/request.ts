@@ -11,7 +11,7 @@ export default class Request {
     this.tunnel = this.getTunnel()
   }
 
-  getTunnel(): AxiosInstance {
+  private getTunnel(): AxiosInstance {
     const api_server: string = process.env.API_SERVER || ''
 
     const tunnel = axios.create({
@@ -28,52 +28,35 @@ export default class Request {
             error: error.response
           } as Error)
       } else if (error.request) {
-        Promise.reject({
-            type: 'with-request',
-            error: error.request
-          } as Error)
+        logger.warn(`${error.config.method}: ${error.request.responseURL} error with request ${JSON.stringify(error.error)}`)
+      } else {
+        logger.warn(`${error.config.method}: ${error.config.url} error with error ${error.error.toJSON()}`)
       }
-
-      Promise.reject({
-          type: 'error',
-          error
-        } as Error)
+      
     })
 
     return tunnel
   }
 
-  post < T extends Response > (url: string, params: {}): Promise < void | T > {
+  protected post < T extends Response > (url: string, params: {} = {}): Promise < T > {
     return this.tunnel
       .post(url, params)
       .then((response: AxiosResponse < {} > ) => {
         return response.data as T
       })
       .catch((error: Error) => {
-        if (error.type == 'with-response') {
-          Promise.reject(error.error.data as Response)
-        } else if (error.type == 'with-request') {
-          logger.warn(`POST: ${url} error with request ${JSON.stringify(error.error)}`)
-        } else {
-          logger.warn(`POST: ${url} error with error ${error.error.toJSON()}`)
-        }
+        return error.error.data as T
       })
   }
 
-  get < T extends Response > (url: string): Promise < void | T > {
+  protected get < T extends Response > (url: string): Promise < void | T > {
     return this.tunnel
       .get(url)
       .then((response: AxiosResponse < {} > ) => {
         return response.data as T
       })
       .catch((error: Error) => {
-        if (error.type == 'with-response') {
-          Promise.reject(error.error.data as Response)
-        } else if (error.type == 'with-request') {
-          logger.warn(`POST: ${url} error with request ${JSON.stringify(error.error)}`)
-        } else {
-          logger.warn(`POST: ${url} error with error ${error.error.toJSON()}`)
-        }
+        return error.error.data as T
       })
   }
 }

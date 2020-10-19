@@ -1,0 +1,18 @@
+{
+    "localhost": {
+        "log_path": "log/localhost/",
+        "log_level": "silly"
+    },
+    "development": {
+        "log_path": "log/development/",
+        "log_level": "silly"
+    },
+    "staging": {
+        "log_path": "log/staging/",
+        "log_level": "debug"
+    },
+    "production": {
+        "log_path": "log/production/",
+        "log_level": "info"
+    }
+}

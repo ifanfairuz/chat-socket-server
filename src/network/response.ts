@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 interface Response {
-  status: boolean,
+  status: boolean
   message: string
 }
 
 export interface Error {
-  type: string,
+  type: string
   error: any
 }
 

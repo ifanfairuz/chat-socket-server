@@ -1,10 +1,19 @@
 import { Response } from '../../network'
 import { logger } from '../../global'
 
+export interface Session {
+  id: number
+  email: string
+  socket_id: string
+  created_at: string
+  updated_at: string
+}
+
 export interface SessionResponse extends Response {
   status: boolean
   message: string
-  token: string
+  datas: Array<Session>
+  session?: Session
 }
 
 export class Exception {

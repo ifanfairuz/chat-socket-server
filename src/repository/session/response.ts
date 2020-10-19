@@ -1,7 +1,7 @@
 import { Response } from '../../network'
 import { logger } from '../../global'
 
-export interface Session {
+export interface Session extends Object {
   id: number
   email: string
   socket_id: string

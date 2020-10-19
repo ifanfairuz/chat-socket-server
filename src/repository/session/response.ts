@@ -1,13 +1,6 @@
 import { Response } from '../../network'
 import { logger } from '../../global'
-
-export interface Session extends Object {
-  id: number
-  email: string
-  socket_id: string
-  created_at: string
-  updated_at: string
-}
+import { Session } from './_type'
 
 export interface SessionResponse extends Response {
   status: boolean

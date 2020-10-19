@@ -1,3 +1,7 @@
 node_modules
-.env
+build/*
+!build/.gitkeep
+log/*/**
 yarn.lock
+
+.env

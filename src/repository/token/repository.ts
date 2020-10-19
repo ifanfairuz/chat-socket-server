@@ -28,13 +28,13 @@ export default class TokenRepository extends Request {
    *  -- @TokenResponse data
    * Return @void
    */
-  public purge(email: string, callback: (data: TokenResponse) => void) {
+  public purge(callback: (data: TokenResponse) => void) {
     this.post<TokenResponse>('/token/purge')
       .then((data: TokenResponse) => {
         callback(data)
       })
       .catch((err: TokenResponse) => {
-        return new Exception('post', '/token/get', err);
+        return new Exception('post', '/token/purge', err);
       })
   }
 

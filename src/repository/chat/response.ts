@@ -1,6 +1,5 @@
 import { Response } from '../../network'
 import { logger } from '../../global'
-import { Session } from '../session/response'
 
 export interface Chat extends Object {
   id: number

@@ -5,12 +5,23 @@ require('dotenv').config()
 
 export default class Request {
 
+  /**
+   * @property {AxiosInstance} tunnel
+   */
   tunnel: AxiosInstance
 
+  /**
+   * @constructor
+   */
   constructor () {
     this.tunnel = this.getTunnel()
   }
 
+  /**
+   * @description get tunnel instanceof axios
+   * @returns {AxiosInstance} AxiosInstance
+   * @private
+   */
   private getTunnel(): AxiosInstance {
     const api_server: string = process.env.API_SERVER || ''
 
@@ -38,6 +49,13 @@ export default class Request {
     return tunnel
   }
 
+  /**
+   * @description post method request
+   * @param {string} url string
+   * @param {object} params object
+   * @returns {Promise<T>}
+   * @protected
+   */
   protected post < T extends Response > (url: string, params: {} = {}): Promise < T > {
     return this.tunnel
       .post(url, params)
@@ -49,6 +67,12 @@ export default class Request {
       })
   }
 
+  /**
+   * @description get method request
+   * @param {string} url string
+   * @returns {Promise<T>}
+   * @protected
+   */
   protected get < T extends Response > (url: string): Promise < T > {
     return this.tunnel
       .get(url)

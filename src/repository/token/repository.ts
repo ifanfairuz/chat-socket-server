@@ -12,12 +12,13 @@ export default class TokenRepository extends Request {
    * Return @void
    */
   public getToken(email: string, callback: (data: TokenResponse) => void) {
-    this.post<TokenResponse>('/token/get', { email })
+    const url = '/token/get'
+    this.post<TokenResponse>(url, { email })
       .then((data: TokenResponse) => {
         callback(data)
       })
       .catch((err: TokenResponse) => {
-        return new Exception('post', '/token/get', err);
+        return new Exception('post', url, err);
       })
   }
 
@@ -29,12 +30,13 @@ export default class TokenRepository extends Request {
    * Return @void
    */
   public purge(callback: (data: TokenResponse) => void) {
-    this.post<TokenResponse>('/token/purge')
+    const url = '/token/purge'
+    this.post<TokenResponse>(url)
       .then((data: TokenResponse) => {
         callback(data)
       })
       .catch((err: TokenResponse) => {
-        return new Exception('post', '/token/purge', err);
+        return new Exception('post', url, err);
       })
   }
 

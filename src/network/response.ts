@@ -1,11 +1,9 @@
-import axios from 'axios'
-
-interface Response {
+interface Response extends Object {
   status: boolean
   message: string
 }
 
-export interface Error {
+export interface Error extends Object {
   type: string
   error: any
 }

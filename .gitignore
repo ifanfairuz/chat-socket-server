@@ -1,4 +1,7 @@
 node_modules
-.env
-yarn.lock
+build/*
+!build/.gitkeep
 log/*/**
+yarn.lock
+
+.env

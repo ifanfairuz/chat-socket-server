@@ -49,7 +49,7 @@ export default class Request {
       })
   }
 
-  protected get < T extends Response > (url: string): Promise < void | T > {
+  protected get < T extends Response > (url: string): Promise < T > {
     return this.tunnel
       .get(url)
       .then((response: AxiosResponse < {} > ) => {

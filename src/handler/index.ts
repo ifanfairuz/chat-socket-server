@@ -4,7 +4,6 @@ import { Socket } from 'socket.io'
 export class ChatEmit {
   public static INIT = 'chat-init'
   public static TARGET_SET = 'chat-target-set'
-  public static LOAD_MORE = 'chat-load-more'
   public static CHAT_SEND = 'chat-send'
   public static CHAT_SENT = 'chat-sent'
   public static CHAT_RECEIVE = 'chat-receive'

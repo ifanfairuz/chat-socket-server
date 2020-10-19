@@ -36,7 +36,7 @@ function getFormatConsole(): any {
 }
 
 
-export const logger: Logger = createLogger({
+const logger: Logger = createLogger({
     level: config.log_level,
     format: getFormat(),
     transports: [
@@ -50,3 +50,5 @@ export const logger: Logger = createLogger({
         })
     ]
 })
+
+export default logger

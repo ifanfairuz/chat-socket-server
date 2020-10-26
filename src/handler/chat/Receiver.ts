@@ -52,7 +52,7 @@ export default class ChatReceiver extends BaseHandler {
       this.chatEmiter.onInit({
         email: this.email,
         datas: {
-          history: res,
+          history: res.history,
           email: this.email
         }
       })

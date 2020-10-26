@@ -1,34 +1,36 @@
 import { Socket } from 'socket.io'
 import BaseEvent from '../parents/BaseEventHandler'
-import { ChatRepository, SessionRepository, TokenRepository } from '../repository'
-import { SesionEmit, TokenEmit } from './'
+import { SessionRepository, TokenRepository } from '../repository'
+import { SessionEmit, TokenEmit } from './'
 import { SessionResponse } from '../repository/session/response'
 
 export default class Receiver extends BaseEvent {
 
   protected sessionRepository: SessionRepository
-  protected chatRepository: ChatRepository
   protected tokenRepository: TokenRepository
 
-  constructor(connection: Socket) {
-    super(connection)
+  constructor(socket: Socket) {
+    super(socket)
     this.sessionRepository = new SessionRepository()
-    this.chatRepository = new ChatRepository()
     this.tokenRepository = new TokenRepository()
+    this.sessionRepository.setToken(this.token)
+    this.tokenRepository.setToken(this.token)
   }
 
   public onSetToken(token: string): void {
     this.token = token
+    this.sessionRepository.setToken(token)
+    this.tokenRepository.setToken(token)
   }
 
   public emitTokenRequest(): void {
-    this.connection.emit(TokenEmit.TOKEN_REQUEST, {
+    this.socket.emit(TokenEmit.TOKEN_REQUEST, {
       email: this.email
     })
   }
 
   public emitTokenValid(): void {
-    this.connection.emit(TokenEmit.TOKEN_VALID, {
+    this.socket.emit(TokenEmit.TOKEN_VALID, {
       email: this.email,
       token: this.token
     })
@@ -37,7 +39,7 @@ export default class Receiver extends BaseEvent {
   public onConectSession(callback ? : (res: SessionResponse) => void): void {
     const param: object = {
       email: this.email,
-      socket: this.connection.id
+      socket: this.socket.id
     }
 
     this.sessionRepository.connect(param, res => {
@@ -49,7 +51,7 @@ export default class Receiver extends BaseEvent {
   public onDisconnectSession(callback ? : (res: SessionResponse) => void): void {
     const param: object = {
       email: this.email,
-      socket: this.connection.id
+      socket: this.socket.id
     }
 
     this.sessionRepository.disconnect(param, res => {
@@ -70,54 +72,64 @@ export default class Receiver extends BaseEvent {
   }
 
   public emitSessionConnect(): void {
-    this.connection.emit(SesionEmit.SESSION_CONNECT, {
+    this.socket.emit(SessionEmit.SESSION_CONNECT, {
       email: this.email,
       token: this.token
     })
   }
 
   public emitSessionDisconnect(): void {
-    this.connection.emit(SesionEmit.SESSION_DISCONNECT, {
+    this.socket.emit(SessionEmit.SESSION_DISCONNECT, {
       email: this.email,
       token: this.token
     })
   }
 
   public emitSessionReset(): void {
-    this.room.emit(SesionEmit.SESSION_RESET, {
+    this.room.emit(SessionEmit.SESSION_RESET, {
       email: this.email,
       token: this.token,
-      reset_from: this.connection.id
+      reset_from: this.socket.id
+    })
+  }
+
+  public connecSession(callback?: (param: any) => void) {
+    this.onConectSession(res => {
+      this.socket.join(this.email)
+      this.emitSessionConnect()
+
+      if (callback) callback({
+        email: this.email,
+        token: this.token
+      })
     })
   }
 
   public onConnected(callback ? : (param: any) => void): void {
     this.emitTokenRequest()
 
-    this.tokenRepository.getToken(this.email, res => {
-      const token = res.token
-      this.onSetToken(token)
-      this.emitTokenValid()
-
-      this.onConectSession(res => {
-        this.connection.join(this.email)
-        this.emitSessionConnect()
-
-        if (callback) callback({
-          email: this.email,
-          token: this.token
-        })
+    if (this.token == '') {
+      this.tokenRepository.getToken(this.email, res => {
+        const token = res.token
+        this.onSetToken(token)
+        this.emitTokenValid()
+  
+        this.connecSession(callback)
       })
-    })
+    } else {
+      this.connecSession(callback)
+    }
   }
 
   public onDisconnected(callback ? : (res: SessionResponse) => void): void {
-    this.connection.leave(this.email)
+    this.socket.leave(this.email)
 
-    this.onDisconnectSession(res => {
-      this.emitSessionDisconnect()
-      if (callback) callback(res)
-    })
+    if (this.token != '') {
+      this.onDisconnectSession(res => {
+        this.emitSessionDisconnect()
+        if (callback) callback(res)
+      })
+    }
   }
 
 }

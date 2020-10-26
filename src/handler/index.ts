@@ -15,7 +15,7 @@ export class TokenEmit {
   public static TOKEN_VALID = 'token-valid'
 }
 
-export class SesionEmit {
+export class SessionEmit {
   public static SESSION_CONNECT = 'session-connect'
   public static SESSION_DISCONNECT = 'session-disconnect'
   public static SESSION_RESET = 'session-reset'
@@ -28,13 +28,14 @@ export class ChatEvent {
   public static SEND_CHAT = 'send-chat'
   public static RECEIVE_CHAT = 'receive-chat'
   public static READ_CHAT = 'read-chat'
+  public static LIST_USER = 'list-user'
 }
 
 export class TokenEvent {
   public static SET_TOKEN = 'set-token'
 }
 
-export class SesionEvent {
+export class SessionEvent {
   public static CONNECT_SESSION = 'connect-session'
   public static DISCONNECT_SESSION = 'disconnect-session'
   public static RESET_SESSION = 'reset-session'

@@ -28,6 +28,21 @@ export default class ChatReceiver extends BaseHandler {
   }
 
   /**
+   * @description on set token
+   * @param {string} token string
+   * @return {void} void
+   * @public
+   * @override
+   */
+  public onSetToken(token: string): void {
+    this.token = token
+    this.sessionRepository.setToken(token)
+    this.tokenRepository.setToken(token)
+    this.chatRepository.setToken(token)
+    this.userRepository.setToken(token)
+  }
+
+  /**
    * @description on receive event ChatEvent.INIT
    * @return {void} void
    * @public

@@ -1,7 +1,7 @@
 import express from 'express'
 import socket, { Socket } from 'socket.io'
 import _http from 'http'
-import { ChatEmit, ChatEvent, SesionEmit, SesionEvent, TokenEmit, TokenEvent, createChatHandler } from './handler'
+import { ChatEmit, ChatEvent, SessionEmit, SessionEvent, TokenEmit, TokenEvent, createChatHandler } from './handler'
 import { logger } from './global'
 require('dotenv').config()
 
@@ -24,7 +24,7 @@ io.use((socket, next) => {
     return next();
   }
 
-  return next(new Error('Authentication Error, user must be defined'));
+  return new Error('Authentication Error, user must be defined');
 });
 
 /**
@@ -36,10 +36,12 @@ io.on('connection', function (socket: Socket) {
 
   event.onConnected(res => {
     socket.on(TokenEvent.SET_TOKEN, (token: string) => event.onSetToken(token))
+    socket.on(SessionEvent.CONNECT_SESSION, (callback?: (param: any) => void) => event.onConectSession(callback))
+    socket.on(SessionEvent.DISCONNECT_SESSION, (callback?: (param: any) => void) => event.onDisconnectSession(callback))
+    socket.on(SessionEvent.RESET_SESSION, (callback?: (param: any) => void) => event.onResetSession(callback))
 
-    socket.on(SesionEvent.CONNECT_SESSION, (callback?: (param: any) => void) => event.onConectSession(callback))
-    socket.on(SesionEvent.DISCONNECT_SESSION, (callback?: (param: any) => void) => event.onDisconnectSession(callback))
-    socket.on(SesionEvent.RESET_SESSION, (callback?: (param: any) => void) => event.onResetSession(callback))
+    socket.on(ChatEvent.LIST_USER, (callback?: (param: any) => void) => event.onListUser(callback))
+    socket.on(ChatEvent.SET_TARGET, (target: string) => event.onSetTarget(target))
   })
 });
 

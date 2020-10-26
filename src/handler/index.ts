@@ -19,6 +19,8 @@ export class SessionEmit {
   public static SESSION_CONNECT = 'session-connect'
   public static SESSION_DISCONNECT = 'session-disconnect'
   public static SESSION_RESET = 'session-reset'
+  public static SOMEONE_CONNECT = 'session-connect'
+  public static SOMEONE_DISCONNECT = 'session-disconnect'
 }
 
 export class ChatEvent {

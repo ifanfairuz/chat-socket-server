@@ -3,6 +3,7 @@ import BaseEvent from '../parents/BaseEventHandler'
 import { SessionRepository, TokenRepository } from '../repository'
 import { SessionEmit, TokenEmit } from './'
 import { SessionResponse } from '../repository/session/response'
+import moment from 'moment'
 
 export default class Receiver extends BaseEvent {
 
@@ -15,6 +16,24 @@ export default class Receiver extends BaseEvent {
     this.tokenRepository = new TokenRepository()
     this.sessionRepository.setToken(this.token)
     this.tokenRepository.setToken(this.token)
+  }
+
+  public someoneConnect(email: string): void {
+    this.socket
+      .broadcast
+      .emit(SessionEmit.SOMEONE_CONNECT, {
+        email,
+        last_online: moment().unix()
+      })
+  }
+
+  public someoneDisconnect(email: string): void {
+    this.socket
+      .broadcast
+      .emit(SessionEmit.SOMEONE_DISCONNECT, {
+        email,
+        last_online: moment().unix()
+      })
   }
 
   public onSetToken(token: string): void {
@@ -39,7 +58,8 @@ export default class Receiver extends BaseEvent {
   public onConectSession(callback ? : (res: SessionResponse) => void): void {
     const param: object = {
       email: this.email,
-      socket: this.socket.id
+      socket: this.socket.id,
+      image: this.image
     }
 
     this.sessionRepository.connect(param, res => {
@@ -97,6 +117,7 @@ export default class Receiver extends BaseEvent {
     this.onConectSession(res => {
       this.socket.join(this.email)
       this.emitSessionConnect()
+      this.someoneConnect(this.email)
 
       if (callback) callback({
         email: this.email,
@@ -123,10 +144,12 @@ export default class Receiver extends BaseEvent {
 
   public onDisconnected(callback ? : (res: SessionResponse) => void): void {
     this.socket.leave(this.email)
-
+    this.someoneDisconnect(this.email)
+    
     if (this.token != '') {
       this.onDisconnectSession(res => {
         this.emitSessionDisconnect()
+        
         if (callback) callback(res)
       })
     }

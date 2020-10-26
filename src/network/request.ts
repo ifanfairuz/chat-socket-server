@@ -7,14 +7,31 @@ export default class Request {
 
   /**
    * @property {AxiosInstance} tunnel
+   * @protected
    */
-  tunnel: AxiosInstance
+  protected tunnel: AxiosInstance
+
+  /**
+   * @property {string} token
+   * @protected
+   */
+  protected userToken: string
 
   /**
    * @constructor
    */
   constructor () {
     this.tunnel = this.getTunnel()
+    this.userToken = ''
+  }
+
+  /**
+   * @description set userToken
+   * @public
+   */
+  public setToken(userToken: string) {
+    this.userToken = userToken
+    this.tunnel.defaults.headers['Chat-User-Token'] = this.userToken
   }
 
   /**
@@ -28,7 +45,7 @@ export default class Request {
     const tunnel = axios.create({
       baseURL: api_server,
       headers: {
-
+        'Chat-App-Token': '7812077e66e2a4d4522571d5ec0a7489fd35c355',
       }
     })
 
@@ -39,11 +56,10 @@ export default class Request {
             error: error.response
           } as Error)
       } else if (error.request) {
-        logger.warn(`${error.config.method}: ${error.request.responseURL} error with request ${JSON.stringify(error.error)}`)
+        logger.warn(`${error.config.method}: ${error.config.url} error with request ${JSON.stringify(error.request)}`)
       } else {
         logger.warn(`${error.config.method}: ${error.config.url} error with error ${error.error.toJSON()}`)
       }
-      
     })
 
     return tunnel
@@ -63,6 +79,7 @@ export default class Request {
         return response.data as T
       })
       .catch((error: Error) => {
+        console.log(error)
         return error.error.data as T
       })
   }
@@ -80,6 +97,7 @@ export default class Request {
         return response.data as T
       })
       .catch((error: Error) => {
+        console.log(error)
         return error.error.data as T
       })
   }

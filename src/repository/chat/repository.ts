@@ -15,10 +15,11 @@ export default class SessionRepository extends Request {
     const url = `/chat/history${limit > 0 ? `/${limit}` : ``}`
     this.get<ChatResponse>(url)
       .then((data: ChatResponse) => {
-        callback(data)
-      })
-      .catch((err: ChatResponse) => {
-        return new Exception('get', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('get', url, data)
+        }
       })
   }
 
@@ -34,10 +35,11 @@ export default class SessionRepository extends Request {
     const url = `/chat/get/${id}`
     this.get<ChatResponse>(url)
       .then((data: ChatResponse) => {
-        callback(data)
-      })
-      .catch((err: ChatResponse) => {
-        return new Exception('get', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('get', url, data)
+        }
       })
   }
 
@@ -53,10 +55,11 @@ export default class SessionRepository extends Request {
     const url = `/chat/readall`
     this.post<ChatResponse>(url, { chat_ids })
       .then((data: ChatResponse) => {
-        callback(data)
-      })
-      .catch((err: ChatResponse) => {
-        return new Exception('post', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('post', url, data)
+        }
       })
   }
 
@@ -72,10 +75,11 @@ export default class SessionRepository extends Request {
     const url = `/chat/read`
     this.post<ChatResponse>(url, { chat_id })
       .then((data: ChatResponse) => {
-        callback(data)
-      })
-      .catch((err: ChatResponse) => {
-        return new Exception('post', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('post', url, data)
+        }
       })
   }
 
@@ -91,10 +95,11 @@ export default class SessionRepository extends Request {
     const url = `/chat/received`
     this.post<ChatResponse>(url, { chat_id })
       .then((data: ChatResponse) => {
-        callback(data)
-      })
-      .catch((err: ChatResponse) => {
-        return new Exception('post', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('post', url, data)
+        }
       })
   }
 
@@ -111,10 +116,11 @@ export default class SessionRepository extends Request {
     const url = `/chat/with/${target}/last${limit > 0 ? `/${limit}` : ``}`
     this.get<ChatResponse>(url)
       .then((data: ChatResponse) => {
-        callback(data)
-      })
-      .catch((err: ChatResponse) => {
-        return new Exception('get', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('get', url, data)
+        }
       })
   }
 
@@ -133,10 +139,11 @@ export default class SessionRepository extends Request {
     const url = `/chat/with/${target}/between/${between.start}-${between.end}`
     this.get<ChatResponse>(url)
       .then((data: ChatResponse) => {
-        callback(data)
-      })
-      .catch((err: ChatResponse) => {
-        return new Exception('get', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('get', url, data)
+        }
       })
   }
 
@@ -152,10 +159,11 @@ export default class SessionRepository extends Request {
     const url = `/chat/with/${target}/delay`
     this.get<ChatResponse>(url)
       .then((data: ChatResponse) => {
-        callback(data)
-      })
-      .catch((err: ChatResponse) => {
-        return new Exception('get', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('get', url, data)
+        }
       })
   }
 
@@ -171,10 +179,11 @@ export default class SessionRepository extends Request {
     const url = `/chat/with/${target}/unread`
     this.get<ChatResponse>(url)
       .then((data: ChatResponse) => {
-        callback(data)
-      })
-      .catch((err: ChatResponse) => {
-        return new Exception('get', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('get', url, data)
+        }
       })
   }
 
@@ -190,10 +199,11 @@ export default class SessionRepository extends Request {
     const url = `/chat/with/${target}/readall`
     this.post<ChatResponse>(url)
       .then((data: ChatResponse) => {
-        callback(data)
-      })
-      .catch((err: ChatResponse) => {
-        return new Exception('post', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('post', url, data)
+        }
       })
   }
 
@@ -212,10 +222,11 @@ export default class SessionRepository extends Request {
     const url = `/chat/send`
     this.post<ChatResponse>(url, chat)
       .then((data: ChatResponse) => {
-        callback(data)
-      })
-      .catch((err: ChatResponse) => {
-        return new Exception('post', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('post', url, data)
+        }
       })
   }
 

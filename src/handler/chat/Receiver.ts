@@ -77,22 +77,32 @@ export default class ChatReceiver extends BaseHandler {
    * @return {void}
    * @public
    */
-  public onSetTarget(target: string): void {
+  public onSetTarget(target: string, flag?: string): void {
     this.target = target
 
     this.userRepository.getByEmail(target, ({ user }) => {
-      this.chatRepository.getLastWith(target, 20, res => {
+      if (flag != 'with-chat') {
         this.chatEmiter.onTargetSet({
           email: this.email,
           datas: {
             email: this.email,
             target: user,
-            chats: res.datas,
+            chats: [],
           }
         })
-      })
+      } else {
+        this.chatRepository.getLastWith(target, 20, res => {
+          this.chatEmiter.onTargetSet({
+            email: this.email,
+            datas: {
+              email: this.email,
+              target: user,
+              chats: res.datas,
+            }
+          })
+        })
+      }
     })
-
   }
 
   /**

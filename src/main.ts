@@ -42,7 +42,7 @@ io.on('connection', function (socket: Socket) {
 
     socket.on(ChatEvent.LIST_USER, (callback?: (param: any) => void) => event.onListUser(callback))
     socket.on(ChatEvent.INIT, () => event.onInit())
-    socket.on(ChatEvent.SET_TARGET, (target: string) => event.onSetTarget(target))
+    socket.on(ChatEvent.SET_TARGET, (target: string, flag?: string) => event.onSetTarget(target, flag))
   })
 });
 

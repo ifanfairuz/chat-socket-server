@@ -48,6 +48,7 @@ export default class SessionRepository extends Request {
    * @object params
    *  -- @string email
    *  -- @string socket
+   *  -- @string image
    * @void callback
    *  -- @SessionResponse data
    * Return @void

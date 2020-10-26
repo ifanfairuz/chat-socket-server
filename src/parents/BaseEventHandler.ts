@@ -4,12 +4,14 @@ export default class BaseEventHandler {
 
   protected email: string
   protected token: string
+  protected image: string
   protected socket: Socket
   protected room: Socket
 
   constructor(socket: Socket) {
     this.socket = socket
     this.email = this.getEmail()
+    this.image = this.getImage()
     this.token = this.getToken()
     this.room = this.socket.to(this.email)
   }
@@ -20,6 +22,10 @@ export default class BaseEventHandler {
 
   private getToken(): string {
     return this.socket.handshake.query['token'] || ''
+  }
+
+  private getImage(): string {
+    return this.socket.handshake.query['image'] || ''
   }
   
 }

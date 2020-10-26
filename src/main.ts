@@ -33,7 +33,7 @@ io.use((socket, next) => {
 io.on('connection', function (socket: Socket) {
   let event = createChatHandler(socket)
   
-  socket.on('disconnect', (callback?: (param: any) => void) => event.onDisconnected(callback))
+  socket.on('disconnect', () => event.onDisconnected())
   event.onConnected(res => {
     socket.on(TokenEvent.SET_TOKEN, (token: string) => event.onSetToken(token))
     socket.on(SessionEvent.CONNECT_SESSION, (callback?: (param: any) => void) => event.onConectSession(callback))
@@ -41,6 +41,7 @@ io.on('connection', function (socket: Socket) {
     socket.on(SessionEvent.RESET_SESSION, (callback?: (param: any) => void) => event.onResetSession(callback))
 
     socket.on(ChatEvent.LIST_USER, (callback?: (param: any) => void) => event.onListUser(callback))
+    socket.on(ChatEvent.INIT, () => event.onInit())
     socket.on(ChatEvent.SET_TARGET, (target: string) => event.onSetTarget(target))
   })
 });

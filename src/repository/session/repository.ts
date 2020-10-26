@@ -14,10 +14,11 @@ export default class SessionRepository extends Request {
     const url = '/session/all'
     this.get<SessionResponse>(url)
       .then((data: SessionResponse) => {
-        callback(data)
-      })
-      .catch((err: SessionResponse) => {
-        return new Exception('get', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          new Exception('get', url, data)
+        }
       })
   }
 
@@ -33,10 +34,11 @@ export default class SessionRepository extends Request {
     const url = `/session/get/${socket_id}`
     this.get<SessionResponse>(url)
       .then((data: SessionResponse) => {
-        callback(data)
-      })
-      .catch((err: SessionResponse) => {
-        return new Exception('get', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          new Exception('get', url, data)
+        }
       })
   }
 
@@ -54,10 +56,11 @@ export default class SessionRepository extends Request {
     const url = `/session/connect`
     this.post<SessionResponse>(url, params)
       .then((data: SessionResponse) => {
-        callback(data)
-      })
-      .catch((err: SessionResponse) => {
-        return new Exception('post', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          new Exception('post', url, data)
+        }
       })
   }
 
@@ -75,10 +78,11 @@ export default class SessionRepository extends Request {
     const url = `/session/disconnect`
     this.post<SessionResponse>(url, params)
       .then((data: SessionResponse) => {
-        callback(data)
-      })
-      .catch((err: SessionResponse) => {
-        return new Exception('post', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          new Exception('post', url, data)
+        }
       })
   }
 
@@ -95,10 +99,11 @@ export default class SessionRepository extends Request {
     const url = `/session/reset`
     this.post<SessionResponse>(url, params)
       .then((data: SessionResponse) => {
-        callback(data)
-      })
-      .catch((err: SessionResponse) => {
-        return new Exception('post', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          new Exception('post', url, data)
+        }
       })
   }
 

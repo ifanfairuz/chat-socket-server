@@ -43,6 +43,10 @@ io.on('connection', function (socket: Socket) {
     socket.on(ChatEvent.LIST_USER, (callback?: (param: any) => void) => event.onListUser(callback))
     socket.on(ChatEvent.INIT, () => event.onInit())
     socket.on(ChatEvent.SET_TARGET, (target: string, flag?: string) => event.onSetTarget(target, flag))
+    socket.on(ChatEvent.LOAD_MORE, (last?: number, callback?: (param: any) => void) => event.onLoadMore(last, callback))
+    socket.on(ChatEvent.SEND_CHAT, (param: any, callback?: (param: any) => void) => event.onSendChat(param, callback))
+    socket.on(ChatEvent.RECEIVE_CHAT, (chat_id: number, callback?: (param: any) => void) => event.onReceiveChat(chat_id, callback))
+    socket.on(ChatEvent.READ_CHAT, (chat_id: number, callback?: (param: any) => void) => event.onReadChat(chat_id, callback))
   })
 });
 

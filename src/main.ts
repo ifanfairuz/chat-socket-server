@@ -33,8 +33,8 @@ io.use((socket, next) => {
 io.on('connection', function (socket: Socket) {
   let event = createChatHandler(socket)
   
+  socket.on('disconnect', (callback?: (param: any) => void) => event.onDisconnected(callback))
   event.onConnected(res => {
-    socket.on('user-disconnect', (callback?: (param: any) => void) => event.onDisconnected(callback))
     socket.on(TokenEvent.SET_TOKEN, (token: string) => event.onSetToken(token))
     socket.on(SessionEvent.CONNECT_SESSION, (callback?: (param: any) => void) => event.onConectSession(callback))
     socket.on(SessionEvent.DISCONNECT_SESSION, (callback?: (param: any) => void) => event.onDisconnectSession(callback))

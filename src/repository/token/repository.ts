@@ -15,10 +15,11 @@ export default class TokenRepository extends Request {
     const url = '/token/get'
     this.post<TokenResponse>(url, { email })
       .then((data: TokenResponse) => {
-        callback(data)
-      })
-      .catch((err: TokenResponse) => {
-        return new Exception('post', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('post', url, data)
+        }
       })
   }
 
@@ -33,10 +34,11 @@ export default class TokenRepository extends Request {
     const url = '/token/purge'
     this.post<TokenResponse>(url)
       .then((data: TokenResponse) => {
-        callback(data)
-      })
-      .catch((err: TokenResponse) => {
-        return new Exception('post', url, err);
+        if (data.status) {
+          callback(data)
+        } else {
+          return new Exception('post', url, data)
+        }
       })
   }
 

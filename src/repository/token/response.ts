@@ -21,6 +21,6 @@ export class Exception {
   }
 
   private log() {
-    logger.warn(`${this.method}: /token/get error with message ${this.error.message}`)
+    logger.warn(`${this.method}: ${this.url} error with message ${this.error.message}`)
   }
 }
